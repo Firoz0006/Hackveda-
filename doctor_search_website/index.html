@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Search</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        }
+
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        }
+
+    main {
+        flex: 1;
+        padding: 2rem;
+    }
+
+    footer {
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    #search-input {
+        max-width: 600px;
+    }
+
+    #results-list {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    #results-list li {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    </style>
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-4">
+    <h1>Doctor Search</h1>
+    </header>
+    <main class="container my-4">
+    <section class="search-section text-center mb-4">
+        <input type="text" id="search-input" class="form-control form-control-lg d-inline-block w-75" placeholder="Search for doctors by name or specialization...">
+        <button id="search-button" class="btn btn-primary btn-lg ml-2">Search</button>
+    </section>
+    <section class="results-section">
+        <ul id="results-list" class="list-group"></ul>
+    </section>
+    </main>
+
+    <footer class="bg-primary text-white text-center py-4 mt-auto">
+    <p>&copy; 2024 Doctor Search</p>
+    </footer>
+<script>
+    document.getElementById('search-button').addEventListener('click', searchDoctors);
+
+    const doctors = [
+        { name: 'Dr. John Doe', specialization: 'Cardiologist' },
+        { name: 'Dr. Jane Smith', specialization: 'Dermatologist' },
+        { name: 'Dr. Emily Johnson', specialization: 'Neurologist' },
+        { name: 'Dr. Michael Brown', specialization: 'Pediatrician' }
+    ];
+
+    function searchDoctors() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        const results = doctors.filter(doctor => 
+        doctor.name.toLowerCase().includes(query) || 
+        doctor.specialization.toLowerCase().includes(query)
+        );
+
+        displayResults(results);
+    }
+
+    function displayResults(results) {
+        const resultsList = document.getElementById('results-list');
+        resultsList.innerHTML = '';
+
+        if (results.length > 0) {
+        results.forEach(doctor => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.textContent = `${doctor.name} - ${doctor.specialization}`;
+            resultsList.appendChild(li);
+        });
+
+        } else {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = 'No results found';
+        resultsList.appendChild(li);
+        }
+    }
+</script>
+</body>
+</html>
